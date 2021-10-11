@@ -33,7 +33,7 @@ class Query:
 
 def select(options):
     print("Multiple options, please choose:")
-    while not chosen:
+    while True:
         for i, row in options:
             print(f"[{i}] {row}")
         try:
