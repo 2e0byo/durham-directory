@@ -31,6 +31,31 @@ class Query:
         return [dict(zip(keys, (x.text for x in row.find_all("td")))) for row in rows]
 
 
+def select(options):
+    print("Multiple options, please choose:")
+    while not chosen:
+        for i, row in options:
+            print(f"[{i}] {row}")
+        try:
+            choice = int(input("Choice: "))
+        except Exception:
+            print("Invalid input")
+        if choice in range(len(options)):
+            return choice
+
+
+class QueryOne(Query):
+    """Query and return only *one* candidate."""
+
+    def __call__(self, **kwargs):
+        results = super().__call__(**kwargs)
+        if len(results) <= 1:
+            return results
+        else:
+            choice = select([row["Name"] for row in results])
+            return results[choice]
+
+
 def main():
     from argparse import ArgumentParser
 
