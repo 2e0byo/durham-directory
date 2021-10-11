@@ -36,3 +36,6 @@ from durham_directory import QueryOne
 query = QueryOne()
 query(oname="John", surname="Morris", type_="any")
 ```
+
+We use fuzzy string matching via `fuzzywuzzy` (ignoring the title) to sort
+results, as Durham appears to return them bogosorted.

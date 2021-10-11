@@ -1,6 +1,7 @@
 import requests
 from getpass import getpass
 from bs4 import BeautifulSoup
+from fuzzywuzzy import fuzz
 
 
 class Query:
@@ -31,10 +32,15 @@ class Query:
         return [dict(zip(keys, (x.text for x in row.find_all("td")))) for row in rows]
 
 
-def select(options):
+def select(options: list[str], target: str):
+    def _fuzzy_sort_results(result):
+        name = result.split(" ", 1)[1]
+        return fuzz.token_sort_ratio(name, target)
+
     print("Multiple options, please choose:")
+    options = sorted(options, key=_fuzzy_sort_results, reverse=True)[:30]
     while True:
-        for i, row in options:
+        for i, row in enumerate(options):
             print(f"[{i}] {row}")
         try:
             choice = int(input("Choice: "))
@@ -52,8 +58,13 @@ class QueryOne(Query):
         if len(results) <= 1:
             return results
         else:
-            choice = select([row["Name"] for row in results])
+            target = " ".join((kwargs.get("oname", ""), kwargs.get("surname", "")))
+            choice = select([row["Name"] for row in results], target.strip())
             return results[choice]
+
+
+q = QueryOne(username="lntq46", password="Jl3w5y7o70pqw")
+q(oname="John")
 
 
 def main():
