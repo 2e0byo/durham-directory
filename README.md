@@ -6,8 +6,7 @@ students and staff can look up fellow students and staff.
 
 It is nothing more than a wrapper around `requests` and `bs4`, and absolutely
 nothing clever is being done (although I do think the code is pleasantly
-simple), and absolutely nothing clever is being done (although I do think the
-code is pleasantly simple).
+simple).
 
 ## Installation
 
@@ -27,5 +26,13 @@ durham-directory --oname John --surname Morris
 ```python
 from durham_directory import Query
 query = Query(username="me") # will prompt for password when evaluated
+query(oname="John", surname="Morris", type_="any")
+```
+
+Or if you want to choose one result:
+
+```python
+from durham_directory import QueryOne
+query = QueryOne()
 query(oname="John", surname="Morris", type_="any")
 ```
