@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "durham-directory"
-version = "0.1.0"
+version = "v1.0.0"
 description = "Python Bindings for the Durham University (UK) Directory"
 authors = ["John Maximilian <2e0byo@gmail.com>"]
 license = "MIT"
