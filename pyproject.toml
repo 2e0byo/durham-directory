@@ -1,9 +1,11 @@
 [tool.poetry]
 name = "durham-directory"
-version = "v1.0.0"
+version = "1.2.2"
 description = "Python Bindings for the Durham University (UK) Directory"
 authors = ["John Maximilian <2e0byo@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/2e0byo/durham-directory"
 
 [tool.poetry.dependencies]
 python = "^3.9"
