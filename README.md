@@ -39,3 +39,8 @@ query(oname="John", surname="Morris", type_="any")
 
 We use fuzzy string matching via `fuzzywuzzy` (ignoring the title) to sort
 results, as Durham appears to return them bogosorted.
+
+## Scripts
+
+An example script parsing a csv extracted from the spreadsheets it seems
+timetabling send around and printing Org-mode tables is in `parse_csv.py`.
