@@ -4,6 +4,10 @@ from bs4 import BeautifulSoup
 from fuzzywuzzy import fuzz
 
 
+class QueryError(Exception):
+    pass
+
+
 class Query:
     def __init__(self, username: str = None, password: str = None, **_):
         self.username = username or input("Username: ")
@@ -24,8 +28,15 @@ class Query:
         )
         URL = "https://www.dur.ac.uk/directory/password"
         resp = requests.get(URL, params=args, auth=(self.username, self.password))
+        if "No results found for this search" in resp.text:
+            name = " ".join(x for x in (oname, surname) if x)
+            raise QueryError(f"No results found for {name} of type {type_}.")
 
         soup = BeautifulSoup(resp.text, features="lxml")
+        err = soup.find(class_="error")
+        if err:
+            raise QueryError(err.text)
+
         results = soup.find("table", id="directoryresults")
         keys, *rows = results.find_all("tr")
         keys = [x.text for x in keys.find_all("th")]
