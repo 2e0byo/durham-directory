@@ -54,9 +54,11 @@ def select(options: list[str], target: str):
         for i, (_, row) in enumerate(options):
             print(f"[{i}] {row}")
         try:
-            choice = int(input("Choice: "))
+            choice = input("Choice: ")
+            choice = int(choice)
         except Exception:
-            pass
+            if choice.lower().strip() == "q":
+                raise QueryError("Selection Aborted")
         else:
             if choice in range(len(options)):
                 return options[choice][0]
