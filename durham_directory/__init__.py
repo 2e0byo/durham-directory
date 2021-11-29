@@ -45,13 +45,13 @@ class Query:
 
 def select(options: list[str], target: str):
     def _fuzzy_sort_results(result):
-        name = result.split(" ", 1)[1]
+        name = result[1].split(" ", 1)[1]
         return fuzz.token_sort_ratio(name, target)
 
     print("Multiple options, please choose:")
-    options = sorted(options, key=_fuzzy_sort_results, reverse=True)[:30]
+    options = sorted(enumerate(options), key=_fuzzy_sort_results, reverse=True)[:30]
     while True:
-        for i, row in enumerate(options):
+        for i, (_, row) in enumerate(options):
             print(f"[{i}] {row}")
         try:
             choice = int(input("Choice: "))
@@ -59,7 +59,7 @@ def select(options: list[str], target: str):
             pass
         else:
             if choice in range(len(options)):
-                return choice
+                return options[choice][0]
 
         print("Invalid input")
 
