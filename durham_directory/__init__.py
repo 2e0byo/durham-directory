@@ -48,7 +48,7 @@ def select(options: list[str], target: str):
         name = result[1].split(" ", 1)[1]
         return fuzz.token_sort_ratio(name, target)
 
-    print("Multiple options, please choose:")
+    print(f"Multiple options for {target}, please choose:")
     options = sorted(enumerate(options), key=_fuzzy_sort_results, reverse=True)[:30]
     while True:
         for i, (_, row) in enumerate(options):
@@ -75,7 +75,13 @@ class QueryOne(Query):
             return results[0]
         else:
             target = " ".join((kwargs.get("oname", ""), kwargs.get("surname", "")))
-            choice = select([row["Name"] for row in results], target.strip())
+            choice = select(
+                [
+                    f'{row["Name"]} {row.get("Course") or row["Job/Role"]}'
+                    for row in results
+                ],
+                target.strip(),
+            )
             return results[choice]
 
 
